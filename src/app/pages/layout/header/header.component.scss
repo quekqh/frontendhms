@@ -1,0 +1,9 @@
+@import "src/common.scss";
+
+.header {
+  padding: 2rem;
+  text-align: center;
+  background: $color-blue;
+  color: $color-white;
+  font-size: 30px;
+}

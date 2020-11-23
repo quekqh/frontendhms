@@ -1,0 +1,48 @@
+@import "src/common.scss";
+.card-group {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+label {
+  color: #73818f !important;
+  margin: 0 0 20px 0;
+}
+
+body {
+  background-color: $color-light-gray;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: $color-blue;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+button {
+  background-color: $color-blue;
+  border: none;
+  &:hover {
+    background-color: darken($color-blue, 10);
+  }
+  &:disabled {
+    background-color: $color-text;
+  }
+}
+
+.validation-error {
+  color: $color-error !important;
+  font-family: $font;
+  font-size: 13px;
+}
+
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  font-size: 80%;
+  color: $color-error;
+}

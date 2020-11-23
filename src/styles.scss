@@ -1,1 +1,227 @@
-/* You can add global styles to this file, and also import other style files */
+@import "common.scss";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+body {
+  font-family: $font;
+  font-weight: $font-weight-standard;
+  color: $color-dark-gray;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $color-dark-gray;
+  font-weight: $font-weight-standard !important;
+}
+h4 {
+  font-size: 1rem !important;
+}
+
+.container {
+  flex: 1 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.grid-container-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0.5rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// heading
+.top-heading-text {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0px;
+  font-weight: 900 !important;
+  color: $color-text-dark;
+}
+
+.page-title {
+  margin-top: 6rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+// form
+.form-control {
+  &:focus {
+    box-shadow: unset !important;
+  }
+}
+
+.form-group {
+  min-height: 70px;
+  margin-bottom: 1vh;
+  text-align: left;
+  &.expanded-margin-top {
+    margin-top: 30px;
+  }
+}
+
+// buttons
+button {
+  &:focus {
+    box-shadow: unset !important;
+    outline: 0 !important;
+  }
+}
+.btn {
+  border-radius: 0.5rem !important;
+  border-color: $color-medium-gray !important;
+  font-weight: 400 !important;
+
+  &.focus {
+    box-shadow: none !important;
+  }
+
+  &.ghost {
+    color: $color-dark-gray !important;
+    border: none;
+    background: transparent;
+    &:hover {
+      .fa-chevron-left {
+        color: $color-blue !important;
+      }
+    }
+  }
+
+  &:disabled {
+    cursor: default !important;
+  }
+
+  &.active {
+    border: 2px solid $color-blue !important;
+  }
+}
+.btn-secondary {
+  &:hover:not(:active):not(.active) {
+    color: $color-dark-gray !important;
+    background-color: $color-light-gray !important;
+    border-color: $color-light-gray !important;
+  }
+  &.focus {
+    box-shadow: none !important;
+  }
+}
+.btn-color {
+  &.btn-secondary {
+    background: $color-white;
+    color: $color-dark-gray;
+    padding: 0.5rem 15px;
+    border-color: $color-light-gray;
+    font-family: $font;
+    font-size: 14px;
+    font-weight: 300;
+  }
+}
+.btn-radio {
+  font-weight: $font-weight-standard;
+  border-color: $color-light-gray;
+  width: 100%;
+  &.btn-secondary {
+    &:not(:disabled):not(.disabled) {
+      &.focus,
+      &.active,
+      &:active {
+        color: $color-blue;
+        background-color: $color-white;
+        border: 2px solid $color-blue;
+        box-shadow: 0 0 12px $color-medium-gray !important;
+      }
+    }
+  }
+  input {
+    display: none;
+  }
+}
+
+// intl-tel-input-margin
+.intl-tel-input {
+  input {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    width: 100%;
+    color: #333333;
+    background: $color-white;
+    border: 1px solid $color-light-gray;
+    border-radius: 3px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      outline: none !important;
+    }
+
+    &::placeholder {
+      color: $color-placeholder;
+    }
+  }
+}
+
+// footer
+.footer {
+  display: flex;
+  padding: 4rem 0px 1rem;
+}
+
+.intl-tel-input-margin {
+  margin-top: 38px;
+}
+
+::ng-deep #input-mobile-number > div {
+  width: 100%;
+}
+
+.signout-link {
+  color: $color-blue-inverse;
+  cursor: pointer;
+}
+
+.validation-error {
+  color: $color-error;
+}
+
+.success {
+  color: $color-turqoise;
+}
+
+@media screen and (max-width: 1023px) {
+  .page-title {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .page-title {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .page-title {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-width: 823px) {
+  .page-title {
+    margin-top: 100px;
+  }
+}

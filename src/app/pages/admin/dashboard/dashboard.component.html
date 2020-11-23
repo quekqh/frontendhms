@@ -1,0 +1,110 @@
+<app-header></app-header>
+<div class="container mt-5">
+  <div class="my-5">
+    <p-table
+      class="my-4"
+      #dt
+      [value]="appts"
+      [rows]="10"
+      [paginator]="true"
+      [globalFilterFields]="[
+        'name',
+        'country.name',
+        'representative.name',
+        'status'
+      ]"
+      [(selection)]="selectedAppts"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <h5 class="p-m-0">View Appointments</h5>
+          <!-- <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+        </span> -->
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <!-- <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th> -->
+          <th pSortableColumn="name">Customer Name</th>
+          <th>Contact</th>
+          <th pSortableColumn="date">Date</th>
+          <th pSortableColumn="time">Time</th>
+          <th pSortableColumn="hairstylist">Hairstylist</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-appt>
+        <tr>
+          <!-- <td>
+            <p-tableCheckbox [value]="appt"></p-tableCheckbox>
+        </td> -->
+          <td>{{ appt.customerName }}</td>
+          <td>{{ appt.phoneNumber }}</td>
+          <td>{{ formatDate(appt.appointmentDate) }}</td>
+          <td>{{ formatTime(appt.appointmentTime) }}</td>
+          <td>{{ appt.name }}</td>
+          <td>
+            <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editAppointment(selected_appointment)"></button> -->
+            <button
+              pButton
+              pRipple
+              icon="pi pi-times"
+              class="p-button-rounded p-button-danger"
+              (click)="deleteAppointment(appt.appointmentId)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="mt-5">
+    <h5 class="p-m-0">Apply for Leave</h5>
+    <p>Enter your start/end date and time respectively:</p>
+    <div class="my-3">
+      <label for="timeonly">Start Date/Time</label>
+      <p-calendar
+        [minDate]="minDateValue"
+        dateFormat="dd/mm/yy"
+        [(ngModel)]="startDate"
+        [showTime]="true"
+        inputId="time"
+        (ngOnChange)="resetSelectedEndDate()"
+      ></p-calendar>
+    </div>
+    <div class="my-3">
+      <label for="timeonly">End Date/Time</label>
+      <p-calendar
+        [minDate]="startDate"
+        dateFormat="dd/mm/yy"
+        [(ngModel)]="endDate"
+        [showTime]="true"
+        inputId="time"
+      ></p-calendar>
+    </div>
+  </div>
+  <button
+    type="submit"
+    class="btn btn-submit btn-get mt-3"
+    (click)="createLeave()"
+  >
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    Click here to Apply for Leave
+  </button>
+  <p class="my-2 success" *ngIf="success">
+    You have successfully submitted your leave!
+  </p>
+  <hr />
+  <div class="d-flex justify-content-center my-2">
+    <a class="signout-link mt-3" (click)="signOut()">
+      <i class="fa fa-sign-out" aria-hidden="true"></i>Signout
+    </a>
+  </div>
+</div>

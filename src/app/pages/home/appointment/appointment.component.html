@@ -1,0 +1,208 @@
+<app-header></app-header>
+<div class="wrapper">
+  <div class="container">
+    <div class="col-12">
+      <div class="justify-content-center row page-title">
+        <h2 class="top-heading-text">
+          <ng-container *ngIf="!editAppt">
+            When is the best time to <b>meet</b> you?
+          </ng-container>
+          <ng-container *ngIf="editAppt">
+            When would you like to <b>change your appointment</b> to?
+          </ng-container>
+        </h2>
+        <div class="subtext">
+          <p>Indicate your preferred booking below:</p>
+        </div>
+      </div>
+
+      <!-- <p-messages severity="warn" [(value)]="msgs"></p-messages> -->
+      <div class="col-12">
+        <div class="row">
+          <div class="col-md-5 col-12 text-center">
+            <p-calendar
+              [(ngModel)]="selected_apptDate"
+              [inline]="true"
+              [minDate]="minDateValue"
+              [disabledDates]="disabledDates"
+              (ngModelChange)="updateAvailableAppts()"
+            ></p-calendar>
+          </div>
+
+          <!-- Available slots. -->
+          <div class="appointment-time-slots col-md-7 col-12">
+            <div class="stylist-section">
+              <p>Choose a Hair Stylist</p>
+              <div
+                class="btn-group-toggle group-btn-section"
+                ngbRadioGroup
+                [(ngModel)]="selected_hairstylist"
+                (ngModelChange)="updateAvailableAppts()"
+              >
+                <div class="grid-container-2">
+                  <ng-container
+                    *ngFor="let hairstylist of hairstylists; index as i"
+                  >
+                    <div>
+                      <label
+                        ngbButtonLabel
+                        id="input-timeslot-{{ i }}"
+                        class="btn btn-secondary btn-radio btn-color btn-width"
+                      >
+                        <input
+                          ngbButton
+                          type="radio"
+                          name="hairstylist"
+                          [value]="hairstylist"
+                        />
+                        {{ hairstylist }}
+                      </label>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <div class="time-section">
+              <p>Available Time Slots</p>
+              <p *ngIf="!selected_hairstylist">
+                (Select a hairstylist to view the available timeslots)
+              </p>
+              <div
+                class="btn-group-toggle group-btn-section"
+                ngbRadioGroup
+                *ngIf="selected_hairstylist"
+                [(ngModel)]="selected_appt"
+              >
+                <div class="grid-container-2">
+                  <ng-container *ngFor="let appt of appts; index as i">
+                    <div>
+                      <label
+                        ngbButtonLabel
+                        id="input-timeslot-{{ i }}"
+                        class="btn btn-secondary btn-radio btn-color btn-width"
+                      >
+                        <input
+                          ngbButton
+                          type="radio"
+                          name="timeslot"
+                          [value]="appt"
+                        />
+                        {{ appt }}
+                      </label>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <!-- Contact options -->
+            <div class="contact-section">
+              <form
+                novalidate
+                (ngSubmit)="submit()"
+                [formGroup]="contactForm"
+                class="signup-block"
+              >
+                <p>Contact Information</p>
+
+                <!-- name -->
+                <div class="form-group">
+                  <span class="field-label">
+                    <label for="input-first-name">Name *</label>
+                    <input
+                      id="input-first-name"
+                      type="text"
+                      size="30"
+                      pInputText
+                      class="form-control"
+                      formControlName="name"
+                      autocomplete="name"
+                    />
+                  </span>
+                  <div
+                    class="validation-error"
+                    *ngIf="
+                      name.invalid &&
+                      name.errors?.required &&
+                      (name.dirty || name.touched)
+                    "
+                  >
+                    Your name is required.
+                  </div>
+                </div>
+
+                <!-- WhatsApp number -->
+                <div class="form-group mt-3">
+                  <span class="field-label">
+                    <label for="input-mobile-number">WhatsApp Number *</label>
+                    <ngx-intl-tel-input
+                      id="input-mobile-number"
+                      formControlName="mobile"
+                      autocomplete="tel"
+                      placeholder="Enter your WhatsApp number"
+                      [cssClass]="'custom'"
+                      [preferredCountries]="preferredCountries"
+                      [enableAutoCountrySelect]="false"
+                      [enablePlaceholder]="true"
+                      [searchCountryFlag]="true"
+                      [searchCountryField]="[
+                        SearchCountryField.Iso2,
+                        SearchCountryField.Name
+                      ]"
+                      [selectFirstCountry]="false"
+                      [selectedCountryISO]="selected_country_iso"
+                      [maxLength]="15"
+                      [tooltipField]="TooltipLabel.Name"
+                      [phoneValidation]="true"
+                      [separateDialCode]="true"
+                    ></ngx-intl-tel-input>
+                  </span>
+                  <div
+                    class="validation-error"
+                    *ngIf="
+                      mobile.value &&
+                      !mobile.errors?.pattern &&
+                      mobile.invalid &&
+                      (mobile.dirty || mobile.touched)
+                    "
+                  >
+                    Invalid number.
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <!-- Next step button -->
+      <button
+        type="submit"
+        class="btn btn-submit btn-get"
+        [disabled]="!selected_appt"
+        (click)="submit()"
+      >
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        Book My Appointment
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="d-flex justify-content-center my-2">
+      <p class="success" *ngIf="success">
+        You have successfully submitted your booking!
+      </p>
+    </div>
+
+    <div class="d-flex justify-content-center my-2">
+      <a class="signout-link mt-3" (click)="signOut()">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>Signout
+      </a>
+    </div>
+  </div>
+</div>

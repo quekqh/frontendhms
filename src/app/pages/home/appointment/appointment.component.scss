@@ -1,0 +1,39 @@
+@import "src/common.scss";
+@import "src/primeng.scss";
+
+.field-label {
+  color: $color-gray;
+  font-size: 0.9rem;
+  > label {
+    margin-bottom: 0;
+  }
+}
+
+.btn-secondary {
+  margin: 0;
+}
+
+.btn-secondary.disabled,
+.btn-secondary:disabled {
+  color: $color-dark-gray;
+  background-color: $color-light-gray;
+  border: none;
+  pointer-events: none;
+}
+
+.time-section,
+.contact-section {
+  margin-bottom: 2rem;
+}
+
+.appointment-time-slots {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .appointment-time-slots {
+    padding-left: 2rem;
+    margin-top: 1rem;
+  }
+}
